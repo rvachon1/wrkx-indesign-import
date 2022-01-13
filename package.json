@@ -1,0 +1,16 @@
+{
+  "name": "wrkx_indesign_import",
+  "version": "1.0.0",
+  "description": "Automation to process completed survey collectors for wrkx",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/index.js",
+    "demo": "node src/sandbox.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0"
+  }
+}
