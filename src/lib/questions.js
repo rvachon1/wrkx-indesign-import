@@ -68,5 +68,13 @@ internals.getDaysPreferredOfficeResults = async function () {
   return average;
 };
 
+// Office Workpoint
+internals.getOfficeWorkpointResults = async function () {
+  const results = await utils.getResults(surveyId, qPos.officeWorkpoint, true);
+  const topResults = utils.filterTopResults(3, results);
+
+  return topResults;
+};
+
 // EXPORTS
 module.exports = internals;

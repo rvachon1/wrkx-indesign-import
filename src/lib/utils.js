@@ -141,6 +141,12 @@ internals.findMax = function (results) {
   return maxObj;
 };
 
+internals.filterTopResults = function (num, results) {
+  const sortedResults = results.sort((a, b) => b.count - a.count).slice(0, num);
+
+  return sortedResults;
+};
+
 internals.calcPercentage = function (results, id) {
   const total = results.map((i) => i.count).reduce((acc, ele) => (acc += ele), 0);
   const value = results.find((i) => i.id === id).count;

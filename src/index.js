@@ -17,6 +17,8 @@ const questions = require("./lib/questions");
   // console.log({ daysSpentOffice });
   // const daysPreferredOffice = await questions.getDaysPreferredOfficeResults();
   // console.log({ daysPreferredOffice });
+  const officeWorkPoint = await questions.getOfficeWorkpointResults();
+  console.log({ officeWorkPoint });
 
   process.exit(0);
 })();
