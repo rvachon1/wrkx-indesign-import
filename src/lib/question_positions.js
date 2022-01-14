@@ -43,7 +43,7 @@ function questionPositions() {
       apiPosition: 4,
       lookupPosition: 7,
     },
-    commuteLength: {
+    commuteTime: {
       page: 4,
       apiPosition: 1,
       lookupPosition: 8,
@@ -93,7 +93,7 @@ function questionPositions() {
       apiPosition: 3,
       lookupPosition: 17,
     },
-    whereWorkNotOffice: {
+    remoteWorkLocation: {
       page: 7,
       apiPosition: 1,
       lookupPosition: 18,
@@ -103,7 +103,7 @@ function questionPositions() {
       apiPosition: 2,
       lookupPosition: 19,
     },
-    remoteSpaceNoChanges: {
+    keepWorkingRemotely: {
       page: 7,
       apiPosition: 3,
       lookupPosition: 20,

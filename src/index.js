@@ -1,4 +1,9 @@
 // Imports
+const {
+  getRemoteSpaceNoChanges,
+  getDescribesRemoteSpace,
+  getRemoteMotiviation,
+} = require("./lib/questions");
 const questions = require("./lib/questions");
 
 // MAIN FUNCITON
@@ -17,8 +22,26 @@ const questions = require("./lib/questions");
   // console.log({ daysSpentOffice });
   // const daysPreferredOffice = await questions.getDaysPreferredOfficeResults();
   // console.log({ daysPreferredOffice });
-  const officeWorkPoint = await questions.getOfficeWorkpointResults();
-  console.log({ officeWorkPoint });
+  // const officeWorkPoint = await questions.getOfficeWorkpointResults();
+  // console.log( { officeWorkPoint})
+  // const transportMode = await questions.getTransportMode();
+  // console.log({ transportMode });
+  // const remoteSpace = await getDescribesRemoteSpace();
+  // console.log({ remoteSpace });
+  // const remoteMotivation = await questions.getRemoteMotivation();
+  // console.log({ remoteMotivation });
+  // const remoteLocation = await questions.getRemoteWorkLocation();
+  // console.log({ remoteLocation });
+  // const keepWorkingRemotely = await questions.getKeepWorkingRemotely();
+  // console.log({ keepWorkingRemotely });
+  // const motivatesWorkFromOffice = await questions.getMotivatesWorkFromOffice();
+  // console.log({ motivatesWorkFromOffice });
+  // const commuteTime = await questions.getCommuteTime();
+  // console.log({ commuteTime });
+  // const designElements = await questions.getDesignElementsHowWell();
+  // console.log({ designElements });
+  const customTeams = await questions.getCustomTeams();
+  console.log({ customTeams });
 
   process.exit(0);
 })();

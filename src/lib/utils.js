@@ -53,6 +53,56 @@ internals.getResponses = async function (surveyId, questionId) {
   return responses;
 };
 
+internals.calcAvgFromTextResponses = function (responses) {
+  let count = 0;
+  const total = responses.reduce((acc, r) => {
+    const validPage = r.pages.find((p) => p.questions.length > 0);
+
+    if (validPage) {
+      const validChoice = validPage.questions[0].answers[0].text;
+      // REGEX: String is Entirely Digits
+      if (/^\d+$/.test(validChoice)) {
+        count += 1;
+        return (acc += Number(validChoice));
+      } else {
+        // REGEX: Grap ONLY first set of Digits
+        const validNumber = validChoice.match(/\d+/);
+        if (validNumber) {
+          count += 1;
+          return (acc += Number(validNumber[0]));
+        }
+      }
+    }
+  }, 0);
+
+  const average = Math.round((total / count) * 10) / 10;
+
+  return average;
+};
+
+internals.filterResponsesByIds = function (ids, responses) {
+  const filteredResponses = responses.filter((r) => ids.includes(r.id));
+
+  return filteredResponses;
+};
+
+internals.filterResponsesByChoice = function (choiceId, responses) {
+  const filteredResponses = responses.filter((r) => {
+    const validPage = r.pages.find((p) => p.questions.length > 0);
+
+    if (validPage) {
+      const validChoice = validPage.questions[0].answers[0].choice_id;
+      if (Array.isArray(choiceId) && validChoice) {
+        return choiceId.includes(validChoice);
+      } else if (typeof choiceId === "string" && validChoice) {
+        return validChoice === choiceId;
+      }
+    }
+  });
+
+  return filteredResponses;
+};
+
 internals.mapNumResponses = function (questionId, responses) {
   const mappedResponses = responses.map((response) => {
     const page = response.pages.find(
@@ -123,6 +173,14 @@ internals.lookupChoices = function (questionNumber, addOther = false) {
   return choices;
 };
 
+internals.matchIcons = function (results, icons) {
+  return results.map((result) => {
+    const icon = Object.keys(icons).find((i) => i.includes(result.text.trim()));
+    result.icon = icons[icon];
+    return result;
+  });
+};
+
 internals.lookupQuestion = function (lookupPos) {
   const question = Q[lookupPos];
 
@@ -130,7 +188,7 @@ internals.lookupQuestion = function (lookupPos) {
 };
 
 internals.findMax = function (results) {
-  const maxObj = results[0];
+  let maxObj = results[0];
 
   for (let obj of results) {
     if (obj.count > maxObj.count) {
@@ -141,7 +199,13 @@ internals.findMax = function (results) {
   return maxObj;
 };
 
-internals.filterTopResults = function (num, results) {
+internals.filterTopResultsMean = function (num, results) {
+  const sortedResults = results.sort((a, b) => b.stats.mean - a.stats.mean).slice(0, num);
+
+  return sortedResults;
+};
+
+internals.filterTopResultsCount = function (num, results) {
   const sortedResults = results.sort((a, b) => b.count - a.count).slice(0, num);
 
   return sortedResults;
@@ -162,7 +226,14 @@ internals.calcAverage = function (numbers) {
   return Math.round(average);
 };
 
-// NOT EXPORTED
+internals.totalProperty = function (results, property) {
+  return results.reduce((acc, ele) => {
+    acc += ele[property];
+    return acc;
+  }, 0);
+};
+
+// ****** NOT EXPORTED *******
 
 async function get(url) {
   let payload;
